@@ -21,8 +21,8 @@ export const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <div className="flex flex-col">
-              <span className="text-xl font-bold text-primary">Eagles One Store</span>
-              <span className="text-xs text-muted-foreground italic">Tumāninah Veritas</span>
+              <span className="text-xl font-bold text-primary">Tumāninah Veritas Store</span>
+              <span className="text-xs text-muted-foreground italic">One Stop Store</span>
             </div>
           </Link>
 

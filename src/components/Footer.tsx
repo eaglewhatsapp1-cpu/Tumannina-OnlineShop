@@ -8,10 +8,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-primary">Eagles One Store</h3>
-            <p className="text-sm text-muted-foreground italic">Tumāninah Veritas</p>
+            <h3 className="text-lg font-bold text-primary">Tumāninah Veritas Store</h3>
+            <p className="text-sm text-muted-foreground italic">One Stop Store</p>
             <p className="text-sm text-muted-foreground">
-              One Stop Store - Quality, trust, and modern lifestyle.
+              Quality, trust, and modern lifestyle.
             </p>
           </div>
 
@@ -41,20 +41,25 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Connect</h4>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              <a href="https://www.instagram.com/tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              <a href="https://www.facebook.com/tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
             </div>
-            <p className="text-sm text-muted-foreground">support@eaglesonestore.com</p>
+            <div className="space-y-1">
+              <p className="text-sm text-muted-foreground">tumaninahveritasstore@gmail.com</p>
+              <a href="https://www.tiktok.com/@tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-accent transition-colors block">
+                TikTok: @tumaninah_veritas_store
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Eagles One Store. All rights reserved.
+            © {new Date().getFullYear()} Tumāninah Veritas Store. All rights reserved.
           </p>
         </div>
       </div>
