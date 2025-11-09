@@ -4,6 +4,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { ShoppingBag } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/StructuredData";
 
 const Shop = () => {
   const { data: products = [], isLoading } = useQuery({
@@ -13,6 +14,12 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://eagles-veritas-shop.lovable.app" },
+          { name: "Shop", url: "https://eagles-veritas-shop.lovable.app/shop" }
+        ]}
+      />
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 py-12">

@@ -8,6 +8,7 @@ import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { useState } from "react";
+import { ProductSchema, BreadcrumbSchema } from "@/components/StructuredData";
 
 const ProductDetail = () => {
   const { handle } = useParams();
@@ -75,6 +76,26 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {firstVariant && (
+        <>
+          <ProductSchema
+            name={node.title}
+            description={node.description || ''}
+            image={image?.url || ''}
+            price={firstVariant.price.amount}
+            currency={firstVariant.price.currencyCode}
+            availability={firstVariant.availableForSale}
+            url={`https://eagles-veritas-shop.lovable.app/product/${handle}`}
+          />
+          <BreadcrumbSchema
+            items={[
+              { name: "Home", url: "https://eagles-veritas-shop.lovable.app" },
+              { name: "Shop", url: "https://eagles-veritas-shop.lovable.app/shop" },
+              { name: node.title, url: `https://eagles-veritas-shop.lovable.app/product/${handle}` }
+            ]}
+          />
+        </>
+      )}
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 py-12">

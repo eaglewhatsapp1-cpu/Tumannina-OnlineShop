@@ -8,6 +8,7 @@ import heroBanner from "@/assets/hero-banner.jpg";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { ProductCard } from "@/components/ProductCard";
+import { OrganizationSchema, WebSiteSchema } from "@/components/StructuredData";
 
 const Index = () => {
   const { data: products = [], isLoading } = useQuery({
@@ -17,6 +18,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <OrganizationSchema
+        name="Tumāninah Veritas Store"
+        description="One Stop Store - Quality products, trusted service, modern lifestyle"
+        url="https://eagles-veritas-shop.lovable.app"
+        socialLinks={[
+          "https://www.instagram.com/tumaninah_veritas_store",
+          "https://www.facebook.com/tumaninah_veritas_store",
+          "https://www.tiktok.com/@tumaninah_veritas_store"
+        ]}
+        contactEmail="tumaninahveritasstore@gmail.com"
+      />
+      <WebSiteSchema
+        name="Tumāninah Veritas Store"
+        url="https://eagles-veritas-shop.lovable.app"
+        description="One Stop Store offering quality products with trusted service for a modern lifestyle"
+      />
       <Navbar />
       
       <main className="flex-1">
