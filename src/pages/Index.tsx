@@ -58,7 +58,7 @@ const Index = () => {
                   asChild
                 >
                   <Link to="/about">
-                    Learn More
+                    About Our Philosophy
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
