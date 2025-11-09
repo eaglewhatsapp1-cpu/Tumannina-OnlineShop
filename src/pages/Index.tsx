@@ -22,12 +22,13 @@ const Index = () => {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroBanner})` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-background/50" />
-          </div>
+          <img 
+            src={heroBanner}
+            alt="Eagles One Store - Tumāninah Veritas banner showcasing quality products and modern lifestyle"
+            className="absolute inset-0 w-full h-full object-cover"
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-background/50" />
           
           <div className="relative z-10 container mx-auto px-4 text-center md:text-left">
             <div className="max-w-2xl">
