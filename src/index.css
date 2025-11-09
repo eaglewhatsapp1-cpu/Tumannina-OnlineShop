@@ -30,7 +30,7 @@ All colors MUST be HSL.
 
     /* Muted tones */
     --muted: 40 25% 88%;
-    --muted-foreground: 30 15% 50%;
+    --muted-foreground: 30 15% 38%;
 
     /* Accent - Gold highlight */
     --accent: 45 65% 55%;
