@@ -32,7 +32,6 @@ const Contact = () => {
 
   const onSubmit = (data: ContactFormData) => {
     // Form submission would be implemented here with backend integration
-    console.log("Validated form data:", data);
     toast.success("Message sent successfully! We'll get back to you soon.");
     form.reset();
   };

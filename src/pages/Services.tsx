@@ -33,7 +33,6 @@ const Services = () => {
 
   const onSubmit = (data: ServiceRequestFormData) => {
     // Form submission would be implemented here with backend integration
-    console.log("Validated form data:", data);
     toast.success("Service request submitted successfully! We'll contact you soon.");
     form.reset();
   };
