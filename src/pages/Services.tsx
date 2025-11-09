@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Gift, Building2, Package } from "lucide-react";
+import { Gift, Building2, Package, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -166,6 +166,24 @@ const Services = () => {
                 </Button>
               </form>
             </Form>
+          </div>
+        </section>
+
+        {/* Shop CTA */}
+        <section className="py-12 bg-gradient-to-r from-primary to-primary/80">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-primary-foreground mb-4">
+              Explore Our Products
+            </h2>
+            <p className="text-primary-foreground/90 mb-6 max-w-2xl mx-auto">
+              Find quality products that match your lifestyle and needs.
+            </p>
+            <Button size="lg" variant="secondary" asChild>
+              <Link to="/shop">
+                <ShoppingBag className="mr-2 h-5 w-5" />
+                Shop Now
+              </Link>
+            </Button>
           </div>
         </section>
       </main>

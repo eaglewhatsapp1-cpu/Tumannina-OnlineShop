@@ -8,54 +8,54 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Eagles One Store Design System - Warm Minimalist */
+    /* Eagles One Store - Dark Blue & Silver Design System */
     
-    /* Backgrounds - Creamy beige tones */
-    --background: 45 40% 96%;
-    --foreground: 30 25% 20%;
+    /* Backgrounds - Clean white and light grays */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 15%;
 
-    --card: 45 50% 98%;
-    --card-foreground: 30 25% 20%;
+    --card: 0 0% 98%;
+    --card-foreground: 215 25% 15%;
 
-    --popover: 45 50% 98%;
-    --popover-foreground: 30 25% 20%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 215 25% 15%;
 
-    /* Primary - Rich coffee brown */
-    --primary: 30 25% 40%;
-    --primary-foreground: 45 40% 96%;
+    /* Primary - Deep Navy Blue #0A1F44 */
+    --primary: 215 75% 15%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Soft warm neutral */
-    --secondary: 40 30% 90%;
-    --secondary-foreground: 30 25% 30%;
+    /* Secondary - Light Silver/Gray */
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 215 25% 20%;
 
     /* Muted tones */
-    --muted: 40 25% 88%;
-    --muted-foreground: 30 15% 38%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 215 15% 40%;
 
-    /* Accent - Gold highlight */
-    --accent: 45 65% 55%;
-    --accent-foreground: 30 25% 20%;
+    /* Accent - Silver #C0C0C0 */
+    --accent: 0 0% 75%;
+    --accent-foreground: 215 25% 15%;
 
-    /* Gold variant for CTAs */
-    --gold: 45 63% 52%;
-    --gold-foreground: 30 25% 20%;
+    /* Gold variant for highlights */
+    --gold: 0 0% 75%;
+    --gold-foreground: 215 25% 15%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 85%;
-    --input: 40 20% 85%;
-    --ring: 45 63% 52%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 215 75% 15%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
     
     /* Custom gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(45 40% 96%), hsl(40 45% 92%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 63% 52%), hsl(40 70% 58%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 75% 15%), hsl(215 65% 25%));
+    --gradient-silver: linear-gradient(135deg, hsl(0 0% 75%), hsl(0 0% 85%));
     
     /* Shadows */
-    --shadow-soft: 0 2px 20px -5px hsl(30 25% 20% / 0.1);
-    --shadow-gold: 0 4px 20px -5px hsl(45 63% 52% / 0.3);
+    --shadow-soft: 0 2px 20px -5px hsl(215 25% 15% / 0.15);
+    --shadow-blue: 0 4px 20px -5px hsl(215 75% 15% / 0.25);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -78,37 +78,37 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - warm coffee tones */
-    --background: 30 15% 12%;
-    --foreground: 45 40% 95%;
+    /* Dark mode - Dark blue theme */
+    --background: 215 40% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 30 15% 15%;
-    --card-foreground: 45 40% 95%;
+    --card: 215 35% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 30 15% 15%;
-    --popover-foreground: 45 40% 95%;
+    --popover: 215 35% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 45 40% 90%;
-    --primary-foreground: 30 25% 15%;
+    --primary: 0 0% 85%;
+    --primary-foreground: 215 75% 15%;
 
-    --secondary: 30 20% 20%;
-    --secondary-foreground: 45 40% 90%;
+    --secondary: 215 30% 18%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 30 15% 22%;
-    --muted-foreground: 40 20% 65%;
+    --muted: 215 25% 20%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 45 63% 52%;
-    --accent-foreground: 30 15% 12%;
+    --accent: 0 0% 75%;
+    --accent-foreground: 215 40% 8%;
     
-    --gold: 45 63% 52%;
-    --gold-foreground: 30 15% 12%;
+    --gold: 0 0% 75%;
+    --gold-foreground: 215 40% 8%;
 
     --destructive: 0 62.8% 45%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 30 15% 25%;
-    --input: 30 15% 25%;
-    --ring: 45 63% 52%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 0 0% 75%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

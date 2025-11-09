@@ -30,10 +30,10 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Policies</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Shipping Policy</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Refund Policy</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Terms of Service</a></li>
+              <li><Link to="/shipping" className="text-sm text-muted-foreground hover:text-accent transition-colors">Shipping Policy</Link></li>
+              <li><Link to="/refund" className="text-sm text-muted-foreground hover:text-accent transition-colors">Refund Policy</Link></li>
+              <li><Link to="/privacy" className="text-sm text-muted-foreground hover:text-accent transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-sm text-muted-foreground hover:text-accent transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 

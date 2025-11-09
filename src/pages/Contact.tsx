@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -183,6 +184,23 @@ const Contact = () => {
                 </form>
               </Form>
             </div>
+          </div>
+        </section>
+
+        {/* Shop CTA */}
+        <section className="py-12 bg-gradient-to-r from-primary to-primary/80">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-primary-foreground mb-4">
+              Browse Our Collection
+            </h2>
+            <p className="text-primary-foreground/90 mb-6 max-w-2xl mx-auto">
+              While you're here, check out our latest products and exclusive offers.
+            </p>
+            <Button size="lg" variant="secondary" asChild>
+              <Link to="/shop">
+                Shop Now
+              </Link>
+            </Button>
           </div>
         </section>
       </main>

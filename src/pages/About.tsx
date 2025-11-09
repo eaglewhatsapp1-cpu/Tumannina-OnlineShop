@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { Heart, Shield, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -90,6 +92,23 @@ const About = () => {
               We're building more than a store - we're building a community based on faith, 
               authenticity, and shared values.
             </p>
+          </div>
+        </section>
+
+        {/* Shop CTA */}
+        <section className="py-12 bg-gradient-to-r from-primary to-primary/80">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-primary-foreground mb-4">
+              Discover Our Products
+            </h2>
+            <p className="text-primary-foreground/90 mb-6 max-w-2xl mx-auto">
+              Explore our curated collection of quality products selected with care for your modern lifestyle.
+            </p>
+            <Button size="lg" variant="secondary" asChild>
+              <Link to="/shop">
+                Shop Now
+              </Link>
+            </Button>
           </div>
         </section>
       </main>
