@@ -41,10 +41,22 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Connect</h4>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">
+              <a 
+                href="https://www.instagram.com/tumaninah_veritas_store" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                aria-label="Visit our Instagram page"
+              >
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="https://www.facebook.com/tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">
+              <a 
+                href="https://www.facebook.com/tumaninah_veritas_store" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-foreground hover:text-accent transition-colors"
+                aria-label="Visit our Facebook page"
+              >
                 <Facebook className="h-5 w-5" />
               </a>
             </div>
