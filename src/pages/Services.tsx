@@ -5,8 +5,39 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Gift, Building2, Package } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { toast } from "sonner";
+
+const serviceRequestSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  serviceType: z.string().trim().min(1, "Service type is required").max(100, "Service type must be less than 100 characters"),
+  message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
+});
+
+type ServiceRequestFormData = z.infer<typeof serviceRequestSchema>;
 
 const Services = () => {
+  const form = useForm<ServiceRequestFormData>({
+    resolver: zodResolver(serviceRequestSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      serviceType: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data: ServiceRequestFormData) => {
+    // Form submission would be implemented here with backend integration
+    console.log("Validated form data:", data);
+    toast.success("Service request submitted successfully! We'll contact you soon.");
+    form.reset();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -63,46 +94,79 @@ const Services = () => {
             <h2 className="text-2xl font-bold text-primary mb-6 text-center">
               Request a Service
             </h2>
-            <form className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Name
-                  </label>
-                  <Input placeholder="Your name" />
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="your@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Email
-                  </label>
-                  <Input type="email" placeholder="your@email.com" />
-                </div>
-              </div>
-              
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">
-                  Service Type
-                </label>
-                <Input placeholder="e.g., Custom Order, Gift Card, Corporate" />
-              </div>
-              
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">
-                  Message
-                </label>
-                <Textarea 
-                  placeholder="Tell us about your requirements..." 
-                  rows={5}
+                
+                <FormField
+                  control={form.control}
+                  name="serviceType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Service Type</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., Custom Order, Gift Card, Corporate" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              
-              <Button 
-                className="w-full bg-gold hover:bg-gold/90 text-gold-foreground" 
-                size="lg"
-              >
-                Submit Request
-              </Button>
-            </form>
+                
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Tell us about your requirements..." 
+                          rows={5}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <Button 
+                  type="submit"
+                  className="w-full bg-gold hover:bg-gold/90 text-gold-foreground" 
+                  size="lg"
+                  disabled={form.formState.isSubmitting}
+                >
+                  Submit Request
+                </Button>
+              </form>
+            </Form>
           </div>
         </section>
       </main>
