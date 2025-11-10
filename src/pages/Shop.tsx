@@ -24,10 +24,12 @@ const Shop = () => {
       
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl mb-6">
-            <ShoppingBag className="h-8 w-8 text-primary" />
+          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-primary/15 to-accent/20 rounded-3xl mb-6 shadow-[var(--shadow-soft)]">
+            <ShoppingBag className="h-10 w-10 text-primary" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Shop All Products</h1>
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent mb-4">
+            Shop All Products
+          </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Explore our complete collection of quality products
           </p>
@@ -35,13 +37,13 @@ const Shop = () => {
 
         {isLoading ? (
           <div className="text-center py-16">
-            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
+            <div className="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
             <p className="text-muted-foreground">Loading products...</p>
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-16 bg-card rounded-2xl border border-border shadow-[var(--shadow-soft)]">
-            <ShoppingBag className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
-            <h2 className="text-2xl font-semibold text-foreground mb-3">No Products Found</h2>
+          <div className="text-center py-20 bg-gradient-to-br from-card to-card/80 rounded-3xl border-2 border-border shadow-[var(--shadow-medium)]">
+            <ShoppingBag className="h-24 w-24 text-muted-foreground/50 mx-auto mb-6" />
+            <h2 className="text-3xl font-semibold text-foreground mb-3">No Products Found</h2>
             <p className="text-muted-foreground max-w-md mx-auto">
               Our store is being set up. Please check back soon for our amazing products!
             </p>

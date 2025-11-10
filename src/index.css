@@ -8,60 +8,61 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Eagles One Store - Enhanced Dark Blue & Silver Design System */
+    /* Eagles One Store - Enhanced Navy & Silver Design System */
     
-    /* Backgrounds - Clean white and light grays */
+    /* Light Theme - Bright & Professional */
     --background: 0 0% 100%;
-    --foreground: 215 30% 12%;
+    --foreground: 215 35% 10%;
 
-    --card: 0 0% 99%;
-    --card-foreground: 215 30% 12%;
+    --card: 210 20% 98%;
+    --card-foreground: 215 35% 10%;
 
-    --popover: 0 0% 99%;
-    --popover-foreground: 215 30% 12%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 215 35% 10%;
 
-    /* Primary - Rich Deep Navy Blue #0A1F44 */
-    --primary: 215 80% 15%;
+    /* Primary - Bold Navy Blue #0A1F44 */
+    --primary: 215 85% 18%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 215 80% 20%;
+    --primary-hover: 215 85% 25%;
 
-    /* Secondary - Elegant Light Silver */
-    --secondary: 210 15% 96%;
-    --secondary-foreground: 215 30% 18%;
+    /* Secondary - Cool Silver Gray */
+    --secondary: 210 18% 94%;
+    --secondary-foreground: 215 35% 15%;
 
     /* Muted tones */
-    --muted: 210 12% 94%;
-    --muted-foreground: 215 18% 42%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 20% 38%;
 
-    /* Accent - Metallic Silver #C0C0C0 with blue tint */
-    --accent: 210 8% 78%;
-    --accent-foreground: 215 30% 12%;
-    --accent-hover: 210 8% 70%;
+    /* Accent - Shimmering Silver */
+    --accent: 210 10% 75%;
+    --accent-foreground: 215 35% 10%;
+    --accent-hover: 210 10% 65%;
 
-    /* Gold/Highlight variant - Silver-Blue shine */
-    --gold: 210 12% 80%;
-    --gold-foreground: 215 80% 15%;
-    --gold-hover: 210 12% 72%;
+    /* Gold/Highlight - Premium Silver-Blue */
+    --gold: 210 15% 78%;
+    --gold-foreground: 215 85% 18%;
+    --gold-hover: 210 15% 68%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 12% 90%;
-    --input: 210 12% 90%;
-    --ring: 215 80% 15%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 215 85% 18%;
 
-    --radius: 0.625rem;
+    --radius: 0.75rem;
     
-    /* Enhanced gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 80% 15%), hsl(215 70% 28%));
-    --gradient-silver: linear-gradient(135deg, hsl(210 8% 78%), hsl(210 12% 88%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 98%));
+    /* Rich gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(215 85% 18%) 0%, hsl(215 75% 30%) 100%);
+    --gradient-silver: linear-gradient(135deg, hsl(210 10% 75%) 0%, hsl(210 15% 90%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 20% 98%) 0%, hsl(210 18% 96%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(210 15% 78%) 0%, hsl(210 10% 85%) 100%);
     
-    /* Enhanced shadows */
-    --shadow-soft: 0 2px 24px -6px hsl(215 30% 15% / 0.12);
-    --shadow-medium: 0 4px 32px -8px hsl(215 30% 15% / 0.18);
-    --shadow-blue: 0 6px 28px -6px hsl(215 80% 15% / 0.3);
-    --shadow-gold: 0 4px 20px -5px hsl(210 12% 80% / 0.4);
+    /* Professional shadows */
+    --shadow-soft: 0 2px 30px -8px hsl(215 35% 15% / 0.15);
+    --shadow-medium: 0 4px 40px -10px hsl(215 35% 15% / 0.22);
+    --shadow-blue: 0 8px 35px -8px hsl(215 85% 18% / 0.35);
+    --shadow-gold: 0 4px 25px -6px hsl(210 15% 78% / 0.45);
     
     /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,40 +86,57 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - Enhanced dark blue theme */
-    --background: 215 45% 7%;
-    --foreground: 0 0% 96%;
+    /* Dark Theme - Deep Navy & Luminous Silver */
+    --background: 215 50% 6%;
+    --foreground: 210 15% 95%;
 
-    --card: 215 40% 11%;
-    --card-foreground: 0 0% 96%;
+    --card: 215 45% 10%;
+    --card-foreground: 210 15% 95%;
 
-    --popover: 215 40% 11%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 215 45% 10%;
+    --popover-foreground: 210 15% 95%;
 
-    --primary: 210 12% 85%;
-    --primary-foreground: 215 80% 15%;
-    --primary-hover: 210 12% 78%;
+    /* Primary - Glowing Silver in dark mode */
+    --primary: 210 15% 82%;
+    --primary-foreground: 215 50% 6%;
+    --primary-hover: 210 15% 75%;
 
-    --secondary: 215 35% 16%;
-    --secondary-foreground: 0 0% 92%;
+    /* Secondary - Rich Navy accent */
+    --secondary: 215 40% 14%;
+    --secondary-foreground: 210 15% 90%;
 
-    --muted: 215 30% 18%;
-    --muted-foreground: 0 0% 68%;
+    /* Muted tones */
+    --muted: 215 35% 16%;
+    --muted-foreground: 210 10% 65%;
 
-    --accent: 210 8% 78%;
-    --accent-foreground: 215 45% 7%;
-    --accent-hover: 210 8% 70%;
+    /* Accent - Bright Silver highlight */
+    --accent: 210 12% 80%;
+    --accent-foreground: 215 50% 6%;
+    --accent-hover: 210 12% 72%;
     
-    --gold: 210 12% 80%;
-    --gold-foreground: 215 45% 7%;
-    --gold-hover: 210 12% 72%;
+    /* Gold - Metallic silver-blue glow */
+    --gold: 210 15% 78%;
+    --gold-foreground: 215 50% 6%;
+    --gold-hover: 210 15% 70%;
 
-    --destructive: 0 62.8% 50%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 30% 20%;
-    --input: 215 30% 20%;
-    --ring: 210 12% 85%;
+    --border: 215 35% 18%;
+    --input: 215 35% 18%;
+    --ring: 210 15% 82%;
+    
+    /* Dark mode gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(215 50% 6%) 0%, hsl(215 45% 12%) 100%);
+    --gradient-silver: linear-gradient(135deg, hsl(210 12% 80%) 0%, hsl(210 15% 65%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(215 45% 10%) 0%, hsl(215 40% 13%) 100%);
+    --gradient-accent: linear-gradient(120deg, hsl(210 15% 78%) 0%, hsl(210 12% 70%) 100%);
+    
+    /* Dark mode shadows with glow */
+    --shadow-soft: 0 2px 30px -8px hsl(210 15% 82% / 0.08);
+    --shadow-medium: 0 4px 40px -10px hsl(210 15% 82% / 0.12);
+    --shadow-blue: 0 8px 35px -8px hsl(210 15% 82% / 0.18);
+    --shadow-gold: 0 4px 25px -6px hsl(210 15% 78% / 0.25);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -136,6 +154,23 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+  
+  /* Enhanced scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent-hover;
   }
 }
