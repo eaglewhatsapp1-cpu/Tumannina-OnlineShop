@@ -8,57 +8,64 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Eagles One Store - Dark Blue & Silver Design System */
+    /* Eagles One Store - Enhanced Dark Blue & Silver Design System */
     
     /* Backgrounds - Clean white and light grays */
     --background: 0 0% 100%;
-    --foreground: 215 25% 15%;
+    --foreground: 215 30% 12%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 215 25% 15%;
+    --card: 0 0% 99%;
+    --card-foreground: 215 30% 12%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 215 25% 15%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 215 30% 12%;
 
-    /* Primary - Deep Navy Blue #0A1F44 */
-    --primary: 215 75% 15%;
+    /* Primary - Rich Deep Navy Blue #0A1F44 */
+    --primary: 215 80% 15%;
     --primary-foreground: 0 0% 100%;
+    --primary-hover: 215 80% 20%;
 
-    /* Secondary - Light Silver/Gray */
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 215 25% 20%;
+    /* Secondary - Elegant Light Silver */
+    --secondary: 210 15% 96%;
+    --secondary-foreground: 215 30% 18%;
 
     /* Muted tones */
-    --muted: 0 0% 92%;
-    --muted-foreground: 215 15% 40%;
+    --muted: 210 12% 94%;
+    --muted-foreground: 215 18% 42%;
 
-    /* Accent - Silver #C0C0C0 */
-    --accent: 0 0% 75%;
-    --accent-foreground: 215 25% 15%;
+    /* Accent - Metallic Silver #C0C0C0 with blue tint */
+    --accent: 210 8% 78%;
+    --accent-foreground: 215 30% 12%;
+    --accent-hover: 210 8% 70%;
 
-    /* Gold variant for highlights */
-    --gold: 0 0% 75%;
-    --gold-foreground: 215 25% 15%;
+    /* Gold/Highlight variant - Silver-Blue shine */
+    --gold: 210 12% 80%;
+    --gold-foreground: 215 80% 15%;
+    --gold-hover: 210 12% 72%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 215 75% 15%;
+    --border: 210 12% 90%;
+    --input: 210 12% 90%;
+    --ring: 215 80% 15%;
 
-    --radius: 0.5rem;
+    --radius: 0.625rem;
     
-    /* Custom gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 75% 15%), hsl(215 65% 25%));
-    --gradient-silver: linear-gradient(135deg, hsl(0 0% 75%), hsl(0 0% 85%));
+    /* Enhanced gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(215 80% 15%), hsl(215 70% 28%));
+    --gradient-silver: linear-gradient(135deg, hsl(210 8% 78%), hsl(210 12% 88%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 98%));
     
-    /* Shadows */
-    --shadow-soft: 0 2px 20px -5px hsl(215 25% 15% / 0.15);
-    --shadow-blue: 0 4px 20px -5px hsl(215 75% 15% / 0.25);
+    /* Enhanced shadows */
+    --shadow-soft: 0 2px 24px -6px hsl(215 30% 15% / 0.12);
+    --shadow-medium: 0 4px 32px -8px hsl(215 30% 15% / 0.18);
+    --shadow-blue: 0 6px 28px -6px hsl(215 80% 15% / 0.3);
+    --shadow-gold: 0 4px 20px -5px hsl(210 12% 80% / 0.4);
     
-    /* Transitions */
+    /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -78,37 +85,40 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode - Dark blue theme */
-    --background: 215 40% 8%;
-    --foreground: 0 0% 95%;
+    /* Dark mode - Enhanced dark blue theme */
+    --background: 215 45% 7%;
+    --foreground: 0 0% 96%;
 
-    --card: 215 35% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 215 40% 11%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 215 35% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 215 40% 11%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 0 0% 85%;
-    --primary-foreground: 215 75% 15%;
+    --primary: 210 12% 85%;
+    --primary-foreground: 215 80% 15%;
+    --primary-hover: 210 12% 78%;
 
-    --secondary: 215 30% 18%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 215 35% 16%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 215 25% 20%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 215 30% 18%;
+    --muted-foreground: 0 0% 68%;
 
-    --accent: 0 0% 75%;
-    --accent-foreground: 215 40% 8%;
+    --accent: 210 8% 78%;
+    --accent-foreground: 215 45% 7%;
+    --accent-hover: 210 8% 70%;
     
-    --gold: 0 0% 75%;
-    --gold-foreground: 215 40% 8%;
+    --gold: 210 12% 80%;
+    --gold-foreground: 215 45% 7%;
+    --gold-hover: 210 12% 72%;
 
-    --destructive: 0 62.8% 45%;
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 25% 22%;
-    --input: 215 25% 22%;
-    --ring: 0 0% 75%;
+    --border: 215 30% 20%;
+    --input: 215 30% 20%;
+    --ring: 210 12% 85%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

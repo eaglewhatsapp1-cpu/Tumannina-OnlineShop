@@ -45,14 +45,14 @@ const Index = () => {
             className="absolute inset-0 w-full h-full object-cover"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/60" />
           
           <div className="relative z-10 container mx-auto px-4 text-center md:text-left">
             <div className="max-w-2xl">
-              <h1 className="text-5xl md:text-6xl font-bold text-primary mb-4 leading-tight">
+              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent mb-4 leading-tight">
                 Eagles One Store
               </h1>
-              <p className="text-2xl md:text-3xl text-foreground/80 mb-2 italic font-light">
+              <p className="text-2xl md:text-3xl text-foreground/90 mb-2 italic font-light">
                 Tumāninah Veritas
               </p>
               <p className="text-xl text-muted-foreground mb-8">
@@ -61,7 +61,7 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-gold hover:bg-gold/90 text-gold-foreground shadow-[var(--shadow-gold)]"
+                  className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary text-primary-foreground shadow-[var(--shadow-blue)] hover:shadow-[var(--shadow-medium)] transition-all duration-300"
                   asChild
                 >
                   <Link to="/shop">
@@ -72,6 +72,7 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
+                  className="border-2 hover:bg-accent/10 hover:border-accent transition-all duration-300"
                   asChild
                 >
                   <Link to="/about">
@@ -87,16 +88,20 @@ const Index = () => {
         {/* Featured Products */}
         <section className="py-16 container mx-auto px-4">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl mb-6">
+              <ShoppingBag className="h-8 w-8 text-primary" />
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Featured Products</h2>
             <p className="text-muted-foreground">Discover our curated collection</p>
           </div>
 
           {isLoading ? (
-            <div className="text-center py-12">
+            <div className="text-center py-16">
+              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
               <p className="text-muted-foreground">Loading products...</p>
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-12 bg-card rounded-lg border border-border">
+            <div className="text-center py-12 bg-card rounded-2xl border border-border shadow-[var(--shadow-soft)]">
               <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-foreground mb-2">No Products Yet</h3>
               <p className="text-muted-foreground mb-4">

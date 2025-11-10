@@ -23,19 +23,23 @@ const Shop = () => {
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Shop</h1>
-          <p className="text-lg text-muted-foreground">
+        <div className="mb-12 text-center">
+          <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl mb-6">
+            <ShoppingBag className="h-8 w-8 text-primary" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Shop All Products</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Explore our complete collection of quality products
           </p>
         </div>
 
         {isLoading ? (
-          <div className="text-center py-12">
+          <div className="text-center py-16">
+            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
             <p className="text-muted-foreground">Loading products...</p>
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-16 bg-card rounded-lg border border-border">
+          <div className="text-center py-16 bg-card rounded-2xl border border-border shadow-[var(--shadow-soft)]">
             <ShoppingBag className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
             <h2 className="text-2xl font-semibold text-foreground mb-3">No Products Found</h2>
             <p className="text-muted-foreground max-w-md mx-auto">
