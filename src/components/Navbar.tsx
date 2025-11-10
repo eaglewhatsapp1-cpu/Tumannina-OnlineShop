@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CartDrawer } from "./CartDrawer";
 import { ThemeToggle } from "./ThemeToggle";
-import { LanguageToggle } from "./LanguageToggle";
+
 import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,7 +57,7 @@ export const Navbar = () => {
     { to: "/contact", label: "Contact" },
   ];
 
-  const shopLinks = [
+  const productsLinks = [
     { to: "/shop", label: "All Products", description: "Browse our complete collection" },
     { to: "/collections", label: "Collections", description: "Products organized by category" },
   ];
@@ -78,25 +78,26 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
             {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="text-sm font-medium text-foreground hover:text-primary hover:scale-105 transition-all duration-200"
-              >
-                {link.label}
-              </Link>
+              <div key={link.to} className="px-3 py-1.5 rounded-md bg-accent/5 hover:bg-accent/10 transition-colors">
+                <Link
+                  to={link.to}
+                  className="text-sm font-medium text-foreground hover:text-primary hover:scale-105 transition-all duration-200"
+                >
+                  {link.label}
+                </Link>
+              </div>
             ))}
             
-            {/* Shop Dropdown */}
+            {/* Products Gallery Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-sm font-medium h-auto py-2">
-                  Shop
+                <Button variant="ghost" className="text-sm font-medium h-auto py-2 px-3 rounded-md bg-accent/5 hover:bg-accent/10">
+                  Products Gallery
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-64">
-                {shopLinks.map((link) => (
+                {productsLinks.map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
                     <Link to={link.to} className="cursor-pointer flex flex-col items-start py-3">
                       <div className="font-medium">{link.label}</div>
@@ -107,9 +108,8 @@ export const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <ThemeToggle />
-            <LanguageToggle />
-            <CartDrawer />
+          <ThemeToggle />
+          <CartDrawer />
             
             {user ? (
               <DropdownMenu>
@@ -139,7 +139,6 @@ export const Navbar = () => {
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle />
-            <LanguageToggle />
             <CartDrawer />
             {user ? (
               <DropdownMenu>
@@ -190,10 +189,10 @@ export const Navbar = () => {
               </Link>
             ))}
             
-            {/* Shop Section in Mobile */}
+            {/* Products Gallery Section in Mobile */}
             <div className="border-t border-border pt-3 mt-3">
-              <p className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2">Shop</p>
-              {shopLinks.map((link) => (
+              <p className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2">Products Gallery</p>
+              {productsLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}

@@ -49,19 +49,15 @@ const Index = () => {
           
           <div className="relative z-10 container mx-auto px-4 text-center md:text-left">
             <div className="max-w-2xl">
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent mb-4 leading-tight">
-                Eagles One Store
+              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
+                Tumāninah Veritas Store
               </h1>
-              <p className="text-2xl md:text-3xl text-foreground/90 mb-2 italic font-light">
-                Tumāninah Veritas
-              </p>
-              <p className="text-xl text-muted-foreground mb-8">
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-light">
                 One Stop Store - Quality products, trusted service, modern lifestyle.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary text-primary-foreground shadow-[var(--shadow-blue)] hover:shadow-[var(--shadow-medium)] transition-all duration-300"
                   asChild
                 >
                   <Link to="/shop">
@@ -72,7 +68,6 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="border-2 hover:bg-accent/10 hover:border-accent transition-all duration-300"
                   asChild
                 >
                   <Link to="/about">
@@ -80,6 +75,11 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
+              </div>
+              <div className="mt-6">
+                <Link to="/privacy" className="text-sm text-muted-foreground hover:text-accent underline transition-colors">
+                  Privacy Policy
+                </Link>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ const Index = () => {
                 Our Philosophy
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                At Eagles One Store, we believe in the power of calmness, faith, and trust. 
+                At Tumāninah Veritas Store, we believe in the power of calmness, faith, and trust. 
                 Our curated selection reflects a modern lifestyle built on quality and integrity. 
                 We're more than a store - we're your partner in discovering products that enhance your life.
               </p>
