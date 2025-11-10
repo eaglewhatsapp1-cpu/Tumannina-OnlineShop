@@ -136,10 +136,140 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
   return data;
 }
 
-// Fetch Products
+// Fetch Products with optional sorting
+const PRODUCTS_QUERY_WITH_SORT = `
+  query GetProducts($first: Int!, $sortKey: ProductSortKeys, $reverse: Boolean) {
+    products(first: $first, sortKey: $sortKey, reverse: $reverse) {
+      edges {
+        node {
+          id
+          title
+          description
+          handle
+          publishedAt
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          images(first: 5) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+          variants(first: 10) {
+            edges {
+              node {
+                id
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                availableForSale
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+          options {
+            name
+            values
+          }
+        }
+      }
+    }
+  }
+`;
+
 export async function fetchProducts(first: number = 20): Promise<ShopifyProduct[]> {
   const data = await storefrontApiRequest(STOREFRONT_QUERY, { first });
   return data.data.products.edges;
+}
+
+export async function fetchLatestProducts(first: number = 8): Promise<ShopifyProduct[]> {
+  const data = await storefrontApiRequest(PRODUCTS_QUERY_WITH_SORT, { 
+    first, 
+    sortKey: 'CREATED_AT',
+    reverse: true 
+  });
+  return data.data.products.edges;
+}
+
+// Fetch Collection by Handle
+const COLLECTION_QUERY = `
+  query GetCollection($handle: String!, $first: Int!) {
+    collectionByHandle(handle: $handle) {
+      id
+      title
+      description
+      products(first: $first) {
+        edges {
+          node {
+            id
+            title
+            description
+            handle
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            images(first: 5) {
+              edges {
+                node {
+                  url
+                  altText
+                }
+              }
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  availableForSale
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+            options {
+              name
+              values
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface ShopifyCollection {
+  id: string;
+  title: string;
+  description: string;
+  products: {
+    edges: ShopifyProduct[];
+  };
+}
+
+export async function fetchCollectionByHandle(handle: string, first: number = 20): Promise<ShopifyCollection | null> {
+  const data = await storefrontApiRequest(COLLECTION_QUERY, { handle, first });
+  return data.data.collectionByHandle;
 }
 
 // Cart Create Mutation

@@ -1,39 +1,35 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { CartDrawer } from "./CartDrawer";
-import { ThemeToggle } from "./ThemeToggle";
-
-import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, User, LogOut, Search as SearchIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ThemeToggle } from "./ThemeToggle";
+import { CartDrawer } from "./CartDrawer";
+import { SearchBar } from "./SearchBar";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { NavLink } from "./NavLink";
+import logo from "@/assets/logo.jpg";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const location = useLocation();
+
+  const showSearch = location.pathname === "/" || location.pathname === "/shop";
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -51,70 +47,96 @@ export const Navbar = () => {
   };
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/services", label: "Services" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
+    { href: "/", label: "Home" },
+    { href: "/services", label: "Services" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
 
   const productsLinks = [
-    { to: "/shop", label: "All Products", description: "Browse our complete collection" },
-    { to: "/collections", label: "Collections", description: "Products organized by category" },
+    { href: "/shop", label: "All Products" },
+    { href: "/collections", label: "Collections" },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b-2 border-primary/20 bg-gradient-to-r from-background via-background to-background/95 backdrop-blur-xl shadow-[var(--shadow-soft)]">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:from-accent group-hover:to-primary transition-all duration-300">
-                Tumāninah Veritas Store
+    <nav className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+            <img 
+              src={logo} 
+              alt="Tumāninah Veritas Store" 
+              className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-lg"
+            />
+            <div className="hidden md:flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-transparent leading-tight">
+                Tumāninah Veritas
               </span>
-              <span className="text-xs text-muted-foreground italic">One Stop Store</span>
+              <span className="text-xs text-muted-foreground">One Stop Store</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-1 flex-1 justify-center">
             {navLinks.map((link) => (
-              <div key={link.to} className="px-3 py-1.5 rounded-md bg-accent/5 hover:bg-accent/10 transition-colors">
-                <Link
-                  to={link.to}
-                  className="text-sm font-medium text-foreground hover:text-primary hover:scale-105 transition-all duration-200"
-                >
+              <div key={link.href} className="px-3 py-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors">
+                <NavLink to={link.href}>
                   {link.label}
-                </Link>
+                </NavLink>
               </div>
             ))}
             
             {/* Products Gallery Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-sm font-medium h-auto py-2 px-3 rounded-md bg-accent/5 hover:bg-accent/10">
+                <Button 
+                  variant="ghost" 
+                  className="text-base font-medium hover:bg-secondary/50 transition-colors px-4 py-2 rounded-lg bg-secondary/30"
+                >
                   Products Gallery
-                  <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64">
+              <DropdownMenuContent align="start" className="w-48 bg-card/95 backdrop-blur">
                 {productsLinks.map((link) => (
-                  <DropdownMenuItem key={link.to} asChild>
-                    <Link to={link.to} className="cursor-pointer flex flex-col items-start py-3">
-                      <div className="font-medium">{link.label}</div>
-                      <div className="text-xs text-muted-foreground">{link.description}</div>
+                  <DropdownMenuItem key={link.href} asChild>
+                    <Link to={link.href} className="cursor-pointer hover:bg-secondary/50">
+                      {link.label}
                     </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
 
-          <ThemeToggle />
-          <CartDrawer />
+          {/* Search Bar - Desktop */}
+          {showSearch && (
+            <div className="hidden lg:flex flex-1 max-w-md">
+              <SearchBar />
+            </div>
+          )}
+
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Mobile Search Toggle */}
+            {showSearch && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+              >
+                <SearchIcon className="h-5 w-5" />
+              </Button>
+            )}
             
+            <ThemeToggle />
+            <CartDrawer />
+
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant="outline" size="icon">
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -122,7 +144,6 @@ export const Navbar = () => {
                   <DropdownMenuItem disabled>
                     {user.email}
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Sign Out
@@ -130,73 +151,60 @@ export const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline" size="sm" asChild>
+              <Button variant="outline" size="sm" asChild className="hidden md:flex">
                 <Link to="/auth">Sign In</Link>
               </Button>
             )}
-          </div>
 
-          {/* Mobile Navigation */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <CartDrawer />
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem disabled>
-                    {user.email}
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button variant="ghost" size="icon" asChild>
-                <Link to="/auth">
-                  <User className="h-5 w-5" />
-                </Link>
-              </Button>
-            )}
+            {/* Mobile Menu Toggle */}
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
+              className="lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-3 border-t border-border">
+        {/* Mobile Search Bar */}
+        {showSearch && isSearchOpen && (
+          <div className="lg:hidden mt-4 animate-fade-in">
+            <SearchBar />
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="lg:hidden border-t bg-background/95 backdrop-blur animate-fade-in">
+          <div className="container mx-auto px-4 py-4 space-y-2">
             {navLinks.map((link) => (
               <Link
-                key={link.to}
-                to={link.to}
-                className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                key={link.href}
+                to={link.href}
+                className="block px-4 py-3 text-base font-medium hover:bg-secondary/80 rounded-lg transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
             
-            {/* Products Gallery Section in Mobile */}
-            <div className="border-t border-border pt-3 mt-3">
-              <p className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2">Products Gallery</p>
+            {/* Products Gallery Section */}
+            <div className="space-y-1">
+              <div className="px-4 py-2 text-sm font-semibold text-muted-foreground bg-secondary/30 rounded-lg">
+                Products Gallery
+              </div>
               {productsLinks.map((link) => (
                 <Link
-                  key={link.to}
-                  to={link.to}
-                  className="block py-2 px-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  key={link.href}
+                  to={link.href}
+                  className="block px-4 py-3 text-base font-medium hover:bg-secondary/80 rounded-lg transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
@@ -204,8 +212,8 @@ export const Navbar = () => {
               ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };

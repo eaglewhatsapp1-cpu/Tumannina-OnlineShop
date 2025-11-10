@@ -1,75 +1,104 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-border bg-card mt-20">
+    <footer className="border-t bg-card/50 backdrop-blur">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-primary">Tumāninah Veritas Store</h3>
-            <p className="text-sm text-muted-foreground italic">One Stop Store</p>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Tumāninah Veritas Store</h3>
             <p className="text-sm text-muted-foreground">
-              Quality, trust, and modern lifestyle.
+              One Stop Store - Quality products, trusted service, modern lifestyle.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-foreground">Quick Links</h4>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/shop" className="text-sm text-muted-foreground hover:text-accent transition-colors">Shop</Link></li>
-              <li><Link to="/services" className="text-sm text-muted-foreground hover:text-accent transition-colors">Services</Link></li>
-              <li><Link to="/about" className="text-sm text-muted-foreground hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-sm text-muted-foreground hover:text-accent transition-colors">Contact</Link></li>
+              <li>
+                <Link to="/shop" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Shop
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Policies */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-foreground">Policies</h4>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Policies</h3>
             <ul className="space-y-2">
-              <li><Link to="/shipping" className="text-sm text-muted-foreground hover:text-accent transition-colors">Shipping Policy</Link></li>
-              <li><Link to="/refund" className="text-sm text-muted-foreground hover:text-accent transition-colors">Refund Policy</Link></li>
-              <li><Link to="/privacy" className="text-sm text-muted-foreground hover:text-accent transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-sm text-muted-foreground hover:text-accent transition-colors">Terms of Service</Link></li>
+              <li>
+                <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/shipping" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/refund" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Refund Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Connect */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-foreground">Connect</h4>
+          {/* Social Media */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
               <a 
-                href="https://www.instagram.com/tumaninah_veritas_store" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-accent transition-colors"
+                href="https://www.facebook.com/profile.php?id=61583352851718&sk=about" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Visit our Facebook page"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://www.instagram.com/tumaninahveritasstore/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Visit our Instagram page"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a 
-                href="https://www.facebook.com/tumaninah_veritas_store" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-accent transition-colors"
-                aria-label="Visit our Facebook page"
+                href="https://www.tiktok.com/@tumaninah_veritas_store?is_from_webapp=1&sender_device=pc" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Visit our TikTok page"
               >
-                <Facebook className="h-5 w-5" />
-              </a>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">tumaninahveritasstore@gmail.com</p>
-              <a href="https://www.tiktok.com/@tumaninah_veritas_store" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-accent transition-colors block">
-                TikTok: @tumaninah_veritas_store
+                <Twitter className="h-5 w-5" />
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border text-center">
+        <div className="mt-8 pt-8 border-t text-center">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Tumāninah Veritas Store. All rights reserved.
           </p>
