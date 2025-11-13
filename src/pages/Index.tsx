@@ -45,37 +45,31 @@ const Index = () => {
       
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
+        <section className="relative h-[600px] flex items-center justify-center overflow-hidden group">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-105"
             style={{ backgroundImage: `url(${heroBanner})` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-background/90 dark:from-background/80 dark:via-background/40 dark:to-background/80" />
-          </div>
-          
+          />
+
+          {/* Gradient overlay (subtle, not fully opaque) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background/60 dark:from-background/40 dark:via-background/25 dark:to-background/70 transition-opacity duration-500 group-hover:opacity-80" />
+
           <div className="relative z-10 container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-transparent animate-fade-in">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-foreground animate-fade-in drop-shadow-lg">
               Tumāninah Veritas Store
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
+            <p className="text-xl md:text-2xl text-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
               One Stop Store - Quality products, trusted service, modern lifestyle.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-              <Button size="lg" asChild>
+              <Button size="lg" asChild variant="ghost">
                 <Link to="/shop">
                   Shop Now <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/about">
-                  About Our Philosophy
-                </Link>
+              <Button size="lg" variant="ghost" asChild>
+                <Link to="/about">About Our Philosophy</Link>
               </Button>
-            </div>
-            <div className="mt-6">
-              <Link to="/privacy" className="text-sm text-muted-foreground hover:underline">
-                Privacy Policy
-              </Link>
             </div>
           </div>
         </section>
@@ -88,7 +82,7 @@ const Index = () => {
                 <Clock className="h-5 w-5 text-accent-foreground" />
                 <span className="text-sm font-semibold text-accent-foreground">NEW ARRIVALS</span>
               </div>
-              <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent to-gold bg-clip-text text-transparent">
+              <h2 className="text-4xl font-bold mb-4 text-foreground">
                 Latest Products
               </h2>
               <p className="text-muted-foreground text-lg">
@@ -117,7 +111,7 @@ const Index = () => {
         {/* Featured Products */}
         <section className="py-20 container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
               Featured Products
             </h2>
             <p className="text-muted-foreground text-lg">
@@ -131,13 +125,13 @@ const Index = () => {
             </div>
           ) : featuredProducts && featuredProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.node.id} product={product} />
-              ))}
+                {featuredProducts.map((product) => (
+                    <ProductCard key={product.node.id} product={product} />
+                ))}
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-muted-foreground text-lg mb-4">No products found</p>
+                <h2 className="text-muted-foreground text-lg mb-4 text-foreground">No products found</h2>
               <Button asChild variant="outline">
                 <Link to="/shop">View All Products</Link>
               </Button>
@@ -149,11 +143,11 @@ const Index = () => {
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <h2 className="text-4xl font-bold mb-6 text-foreground">
                 Our Philosophy
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
-                At Tumāninah Veritas Store, we believe in providing more than just products. 
+                At Tumāninah Veritas Store, we believe in providing more than just products.
                 We offer a curated experience of quality, trust, and modern living.
               </p>
               <Button variant="outline" size="lg" asChild>
@@ -173,9 +167,9 @@ const Index = () => {
               Subscribe to our newsletter for exclusive offers and updates
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input 
-                type="email" 
-                placeholder="Enter your email" 
+              <Input
+                type="email"
+                placeholder="Enter your email"
                 className="flex-1 bg-background"
                 required
               />

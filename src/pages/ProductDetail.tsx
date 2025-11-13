@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
-import { ShoppingCart, ArrowLeft } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Gift } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -133,6 +133,20 @@ const ProductDetail = () => {
                   {node.description}
                 </p>
               )}
+            </div>
+
+            {/* Free Gifts Promotion Banner */}
+            <div className="product-free-gift-banner flex items-center gap-3 p-4 bg-gradient-to-r from-[#f8f6f0] to-[#fff9e6] border-l-4 border-[#d4af37] rounded-lg shadow-sm">
+              <Gift className="w-6 h-6 text-[#d4af37] flex-shrink-0" />
+              <p className="text-sm text-[#2c3e50]">
+                Orders <span className="font-semibold">$50+</span> receive a{' '}
+                <Link 
+                  to="/collections/free-gifts" 
+                  className="text-[#d4af37] font-semibold underline hover:text-[#c5a028] transition-colors"
+                >
+                  free Egyptian gift
+                </Link>
+              </p>
             </div>
 
             <div className="border-t border-border pt-6">

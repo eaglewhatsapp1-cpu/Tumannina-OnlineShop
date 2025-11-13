@@ -13,19 +13,23 @@ import tutankhamunThrone from "@/assets/tutankhamun-throne.jpg";
 const CollectionDetail = () => {
   const { handle } = useParams<{ handle: string }>();
 
-  const { data: collection, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['collection', handle],
     queryFn: () => handle ? fetchCollectionByHandle(handle, 50) : Promise.resolve(null),
     enabled: !!handle,
   });
 
+  const collection = data?.collection;
+  const products = data?.products || [];
+
   const isEgyptianHeritage = handle === "egyptian-heritage";
+  const isFreeGifts = handle === "free-gifts";
 
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
+        {/* Hero Section for Egyptian Heritage */}
         {isEgyptianHeritage ? (
           <section className="relative py-20 overflow-hidden bg-gradient-to-br from-background via-secondary/20 to-background">
             <div className="absolute inset-0 opacity-10">
@@ -111,7 +115,8 @@ const CollectionDetail = () => {
               </div>
             </div>
           </section>
-        ) : (
+        ) : isFreeGifts ? (
+          /* Hero Section for Free Gifts Collection */
           <section className="py-20 container mx-auto px-4">
             <Button 
               variant="ghost" 
@@ -125,14 +130,65 @@ const CollectionDetail = () => {
             </Button>
             
             <div className="text-center mb-12">
-              <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {collection?.title || "Collection"}
+              <div className="inline-block mb-4">
+                <span className="text-6xl">🎁</span>
+              </div>
+              <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#d4af37] via-[#c5a028] to-[#d4af37] bg-clip-text text-transparent">
+                {collection?.title || "Free Gifts"}
               </h1>
-              {collection?.description && (
+              {collection?.descriptionHtml ? (
+                <div 
+                  className="text-muted-foreground text-lg max-w-2xl mx-auto prose prose-lg dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
+                />
+              ) : collection?.description ? (
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                   {collection.description}
                 </p>
+              ) : (
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                  Choose your complimentary Egyptian gift with orders over $50 USD
+                </p>
               )}
+            </div>
+          </section>
+        ) : (
+          /* Default Hero Section for Other Collections */
+          <section className="py-20 container mx-auto px-4">
+            <Button 
+              variant="ghost" 
+              asChild 
+              className="mb-6"
+            >
+              <Link to="/collections">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Collections
+              </Link>
+            </Button>
+            
+            <div className="text-center mb-12">
+              {collection?.image && (
+                <div className="mb-8 max-w-2xl mx-auto">
+                  <img 
+                    src={collection.image.url} 
+                    alt={collection.image.altText || collection.title}
+                    className="w-full h-64 object-cover rounded-lg shadow-lg"
+                  />
+                </div>
+              )}
+              <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                {collection?.title || "Collection"}
+              </h1>
+              {collection?.descriptionHtml ? (
+                <div 
+                  className="text-muted-foreground text-lg max-w-2xl mx-auto prose prose-lg dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
+                />
+              ) : collection?.description ? (
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                  {collection.description}
+                </p>
+              ) : null}
             </div>
           </section>
         )}
@@ -143,12 +199,22 @@ const CollectionDetail = () => {
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
-          ) : collection && collection.products.edges.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {collection.products.edges.map((product) => (
-                <ProductCard key={product.node.id} product={product} />
-              ))}
-            </div>
+          ) : products.length > 0 ? (
+            <>
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-semibold text-foreground">
+                  {isFreeGifts ? "Available Free Gifts" : "Products in this Collection"}
+                </h2>
+                <p className="text-muted-foreground mt-2">
+                  {products.length} {products.length === 1 ? 'product' : 'products'} available
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {products.map((product) => (
+                  <ProductCard key={product.node.id} product={product} />
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg mb-4">

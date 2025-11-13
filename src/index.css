@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* =====================================
+   Tumaninah Veritas - Design System
+   Navy & Silver Professional Theme
+   ===================================== */
 
 @layer base {
   :root {
-    /* Eagles One Store - Enhanced Navy & Silver Design System */
-    
     /* Light Theme - Bright & Professional */
     --background: 0 0% 100%;
     --foreground: 215 35% 10%;
@@ -20,7 +19,7 @@ All colors MUST be HSL.
     --popover: 210 20% 98%;
     --popover-foreground: 215 35% 10%;
 
-    /* Primary - Bold Navy Blue #0A1F44 */
+    /* Primary - Bold Navy Blue */
     --primary: 215 85% 18%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 215 85% 25%;
@@ -51,37 +50,20 @@ All colors MUST be HSL.
     --ring: 215 85% 18%;
 
     --radius: 0.75rem;
-    
-    /* Rich gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 18%) 0%, hsl(215 75% 30%) 100%);
-    --gradient-silver: linear-gradient(135deg, hsl(210 10% 75%) 0%, hsl(210 15% 90%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(210 20% 98%) 0%, hsl(210 18% 96%) 100%);
-    --gradient-accent: linear-gradient(120deg, hsl(210 15% 78%) 0%, hsl(210 10% 85%) 100%);
-    
+
     /* Professional shadows */
     --shadow-soft: 0 2px 30px -8px hsl(215 35% 15% / 0.15);
     --shadow-medium: 0 4px 40px -10px hsl(215 35% 15% / 0.22);
     --shadow-blue: 0 8px 35px -8px hsl(215 85% 18% / 0.35);
     --shadow-gold: 0 4px 25px -6px hsl(210 15% 78% / 0.45);
-    
-    /* Smooth transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -113,7 +95,7 @@ All colors MUST be HSL.
     --accent: 210 15% 82%;
     --accent-foreground: 215 40% 12%;
     --accent-hover: 210 15% 75%;
-    
+
     /* Gold - Metallic silver-blue glow */
     --gold: 210 15% 80%;
     --gold-foreground: 215 40% 12%;
@@ -125,18 +107,13 @@ All colors MUST be HSL.
     --border: 215 30% 25%;
     --input: 215 30% 25%;
     --ring: 210 15% 85%;
-    
-    /* Dark mode gradients - Navy tones */
-    --gradient-hero: linear-gradient(135deg, hsl(215 45% 15%) 0%, hsl(215 40% 22%) 100%);
-    --gradient-silver: linear-gradient(135deg, hsl(210 15% 82%) 0%, hsl(210 12% 70%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(215 35% 16%) 0%, hsl(215 30% 20%) 100%);
-    --gradient-accent: linear-gradient(120deg, hsl(210 15% 80%) 0%, hsl(210 12% 72%) 100%);
-    
+
     /* Dark mode shadows with navy glow */
     --shadow-soft: 0 2px 30px -8px hsl(215 85% 18% / 0.25);
     --shadow-medium: 0 4px 40px -10px hsl(215 85% 18% / 0.35);
     --shadow-blue: 0 8px 35px -8px hsl(210 15% 85% / 0.20);
     --shadow-gold: 0 4px 25px -6px hsl(210 15% 80% / 0.30);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -155,22 +132,137 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
-  
+
   /* Enhanced scrollbar styling */
   ::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-track {
     @apply bg-secondary;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     @apply bg-accent rounded-full;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-accent-hover;
+  }
+}
+
+/* ===============================
+   GLOBAL TEXT & COLOR OPTIMIZATION
+   Eagles Veritas - Navy & Silver Theme
+   =============================== */
+
+@layer base {
+  /* Universal Text Color Control */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground font-semibold leading-tight tracking-tight;
+  }
+
+  p, span, li, label, div {
+    @apply text-foreground;
+  }
+
+  strong, b {
+    @apply text-foreground font-bold;
+  }
+
+  small, .text-muted {
+    @apply text-muted-foreground;
+  }
+
+  /* Links & Interactive Elements */
+  a {
+    @apply text-primary transition-colors duration-300 ease-in-out;
+  }
+
+  a:hover {
+    color: hsl(var(--primary-hover));
+  }
+
+  /* Card & Popup Content Text Fix */
+  .card, .popover, .dialog-content {
+    @apply text-card-foreground bg-card;
+  }
+
+  /* Force proper contrast for buttons and CTAs */
+  button, [role="button"] {
+    @apply transition-all duration-300;
+  }
+
+  /* Input elements */
+  input, textarea, select {
+    @apply text-foreground bg-input border-border;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  /* Table elements */
+  table {
+    @apply text-foreground;
+  }
+
+  th, td {
+    @apply text-foreground;
+  }
+}
+
+/* ===============================
+   DARK MODE SPECIFIC FIXES
+   =============================== */
+
+@layer base {
+  /* Ensure all text is visible in dark mode */
+  .dark * {
+    color: hsl(var(--foreground));
+  }
+
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .dark p,
+  .dark span,
+  .dark div,
+  .dark li,
+  .dark label {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .dark a {
+    color: hsl(var(--primary)) !important;
+  }
+
+  .dark a:hover {
+    color: hsl(var(--accent)) !important;
+  }
+
+  .dark .text-muted-foreground {
+    color: hsl(var(--muted-foreground)) !important;
+  }
+
+  .dark input,
+  .dark textarea,
+  .dark select {
+    color: hsl(var(--foreground)) !important;
+    background-color: hsl(var(--input)) !important;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: hsl(var(--muted-foreground)) !important;
   }
 }

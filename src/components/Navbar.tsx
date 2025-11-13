@@ -8,19 +8,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ThemeToggle } from "./ThemeToggle";
 import { CartDrawer } from "./CartDrawer";
 import { SearchBar } from "./SearchBar";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { NavLink } from "./NavLink";
+import { fetchCollections, ShopifyCollection } from "@/lib/shopify";
 import logo from "@/assets/logo.jpg";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const location = useLocation();
 
   const showSearch = location.pathname === "/" || location.pathname === "/shop";
@@ -37,13 +38,22 @@ export const Navbar = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const loadCollections = async () => {
+      try {
+        const data = await fetchCollections(10);
+        setCollections(data);
+      } catch (error) {
+        console.error("Error loading collections:", error);
+      }
+    };
+    loadCollections();
+  }, []);
+
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast.error("Error signing out");
-    } else {
-      toast.success("Signed out successfully");
-    }
+    if (error) toast.error("Error signing out");
+    else toast.success("Signed out successfully");
   };
 
   const navLinks = [
@@ -53,55 +63,57 @@ export const Navbar = () => {
     { href: "/contact", label: "Contact" },
   ];
 
-  const productsLinks = [
-    { href: "/shop", label: "All Products" },
-    { href: "/collections", label: "Collections" },
-  ];
-
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-4">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-            <img 
-              src={logo} 
-              alt="Tumāninah Veritas Store" 
+            <img
+              src={logo}
+              alt="Tumāninah Veritas Store"
               className="h-12 w-12 md:h-14 md:w-14 object-contain rounded-lg"
             />
             <div className="hidden md:flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-transparent leading-tight">
+              <span className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-foreground leading-tight">
                 Tumāninah Veritas
               </span>
-              <span className="text-xs text-muted-foreground">One Stop Store</span>
+              <span className="text-xs text-foreground/80">One Stop Store</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1 flex-1 justify-center">
+          <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
             {navLinks.map((link) => (
-              <div key={link.href} className="px-3 py-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors">
-                <NavLink to={link.href}>
+              <div
+                key={link.href}
+                className="px-3 py-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
+              >
+                <NavLink to={link.href} className="text-foreground">
                   {link.label}
                 </NavLink>
               </div>
             ))}
-            
-            {/* Products Gallery Dropdown */}
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="text-base font-medium hover:bg-secondary/50 transition-colors px-4 py-2 rounded-lg bg-secondary/30"
+                <Button
+                  variant="ghost"
+                  className="text-base font-medium hover:bg-secondary/50 transition-colors px-4 py-2 rounded-lg bg-secondary/30 text-foreground"
                 >
                   Products Gallery
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48 bg-card/95 backdrop-blur">
-                {productsLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild>
-                    <Link to={link.href} className="cursor-pointer hover:bg-secondary/50">
-                      {link.label}
+              <DropdownMenuContent align="start" className="w-56 bg-card/95 backdrop-blur text-foreground">
+                <DropdownMenuItem asChild>
+                  <Link to="/shop" className="hover:bg-secondary/50">All Products</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/collections" className="hover:bg-secondary/50">All Collections</Link>
+                </DropdownMenuItem>
+                {collections.length > 0 && <div className="my-1 h-px bg-border" />}
+                {collections.map((collection) => (
+                  <DropdownMenuItem key={collection.id} asChild>
+                    <Link to={`/collections/${collection.handle}`} className="hover:bg-secondary/50">
+                      {collection.title}
                     </Link>
                   </DropdownMenuItem>
                 ))}
@@ -109,16 +121,13 @@ export const Navbar = () => {
             </DropdownMenu>
           </div>
 
-          {/* Search Bar - Desktop */}
           {showSearch && (
-            <div className="hidden lg:flex flex-1 max-w-md">
+            <div className="hidden md:flex flex-1 max-w-md">
               <SearchBar />
             </div>
           )}
 
-          {/* Right Side Actions */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Mobile Search Toggle */}
             {showSearch && (
               <Button
                 variant="outline"
@@ -129,7 +138,6 @@ export const Navbar = () => {
                 <SearchIcon className="h-5 w-5" />
               </Button>
             )}
-            
             <ThemeToggle />
             <CartDrawer />
 
@@ -140,13 +148,10 @@ export const Navbar = () => {
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem disabled>
-                    {user.email}
-                  </DropdownMenuItem>
+                <DropdownMenuContent align="end" className="text-foreground">
+                  <DropdownMenuItem disabled>{user.email}</DropdownMenuItem>
                   <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
+                    <LogOut className="h-4 w-4 mr-2" /> Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -156,23 +161,17 @@ export const Navbar = () => {
               </Button>
             )}
 
-            {/* Mobile Menu Toggle */}
             <Button
               variant="outline"
               size="icon"
               className="lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
         {showSearch && isSearchOpen && (
           <div className="lg:hidden mt-4 animate-fade-in">
             <SearchBar />
@@ -180,7 +179,6 @@ export const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden border-t bg-background/95 backdrop-blur animate-fade-in">
           <div className="container mx-auto px-4 py-4 space-y-2">
@@ -188,29 +186,34 @@ export const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className="block px-4 py-3 text-base font-medium hover:bg-secondary/80 rounded-lg transition-colors"
+                className="block px-4 py-3 text-base font-medium hover:bg-secondary/80 rounded-lg transition-colors text-foreground"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            
-            {/* Products Gallery Section */}
             <div className="space-y-1">
-              <div className="px-4 py-2 text-sm font-semibold text-muted-foreground bg-secondary/30 rounded-lg">
+              <div className="px-4 py-2 text-sm font-semibold text-foreground/70 bg-secondary/30 rounded-lg">
                 Products Gallery
               </div>
-              {productsLinks.map((link) => (
+              <Link to="/shop" className="block px-4 py-3 text-foreground hover:bg-secondary/80 rounded-lg" onClick={() => setIsMenuOpen(false)}>All Products</Link>
+              <Link to="/collections" className="block px-4 py-3 text-foreground hover:bg-secondary/80 rounded-lg" onClick={() => setIsMenuOpen(false)}>All Collections</Link>
+              {collections.map((collection) => (
                 <Link
-                  key={link.href}
-                  to={link.href}
-                  className="block px-4 py-3 text-base font-medium hover:bg-secondary/80 rounded-lg transition-colors"
+                  key={collection.id}
+                  to={`/collections/${collection.handle}`}
+                  className="block px-4 py-3 text-foreground hover:bg-secondary/80 rounded-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {link.label}
+                  {collection.title}
                 </Link>
               ))}
             </div>
+            {!user && (
+              <Button variant="outline" size="sm" asChild className="w-full mt-4">
+                <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Sign In</Link>
+              </Button>
+            )}
           </div>
         </div>
       )}

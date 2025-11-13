@@ -1,144 +1,289 @@
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { ProductCard } from "@/components/ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/lib/shopify";
-import { ShoppingBag, Grid3x3, Package } from "lucide-react";
-import { BreadcrumbSchema } from "@/components/StructuredData";
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from 'react';
+import { fetchCollections } from '@/lib/shopify';
+import { Link } from 'react-router-dom';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Search, Grid, List, Gift, Sparkles } from 'lucide-react';
+import type { ShopifyCollection } from '@/lib/shopify';
 
-const Collections = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ['collections-products'],
-    queryFn: () => fetchProducts(50),
-  });
+export default function Collections() {
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  // Extract unique categories from products (using product title as collection)
-  const categories = useMemo(() => {
-    const types = new Set<string>();
-    products.forEach(product => {
-      // Use the first few words of the product title as the category
-      const title = product.node.title;
-      // Extract category from title (e.g., "Living Room..." -> "Living Room")
-      const category = title.split(' ').slice(0, 2).join(' ');
-      if (category) types.add(category);
-    });
-    return Array.from(types).filter(Boolean).sort();
-  }, [products]);
+  useEffect(() => {
+    const loadCollections = async () => {
+      try {
+        const data = await fetchCollections(50);
+        setCollections(data);
+      } catch (error) {
+        console.error('Error loading collections:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadCollections();
+  }, []);
 
-  // Filter products based on selected category
-  const filteredProducts = useMemo(() => {
-    if (selectedCategory === "all") return products;
-    return products.filter(product => {
-      const title = product.node.title;
-      const category = title.split(' ').slice(0, 2).join(' ');
-      return category === selectedCategory;
-    });
-  }, [products, selectedCategory]);
+  // Filter collections based on search query
+  const filteredCollections = collections.filter((collection) =>
+    collection.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    collection.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", url: "https://eagles-veritas-shop.lovable.app" },
-          { name: "Collections", url: "https://eagles-veritas-shop.lovable.app/collections" }
-        ]}
-      />
-      <Navbar />
-      
-      <main className="flex-1 container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-primary/15 to-accent/20 rounded-3xl mb-6 shadow-[var(--shadow-soft)]">
-            <Grid3x3 className="h-10 w-10 text-primary" />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent mb-4">
-            Our Collections
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our curated collections of quality products organized by category
-          </p>
-        </div>
+  // Separate featured collections
+  const featuredCollections = filteredCollections.filter(
+    (collection) => 
+      collection.handle === 'egyptian-heritage' || 
+      collection.handle === 'free-gifts'
+  );
 
-        {/* Category Filter */}
-        {categories.length > 0 && (
-          <div className="mb-10">
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Button
-                variant={selectedCategory === "all" ? "default" : "outline"}
-                onClick={() => setSelectedCategory("all")}
-                className={selectedCategory === "all" ? "bg-primary hover:bg-primary-hover" : ""}
-              >
-                <Package className="h-4 w-4 mr-2" />
-                All Products ({products.length})
-              </Button>
-              {categories.map(category => {
-                const count = products.filter(p => {
-                  const title = p.node.title;
-                  const cat = title.split(' ').slice(0, 2).join(' ');
-                  return cat === category;
-                }).length;
-                return (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(category)}
-                    className={selectedCategory === category ? "bg-primary hover:bg-primary-hover" : ""}
-                  >
-                    {category} ({count})
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        )}
+  const regularCollections = filteredCollections.filter(
+    (collection) => 
+      collection.handle !== 'egyptian-heritage' && 
+      collection.handle !== 'free-gifts'
+  );
 
-        {/* Products Grid */}
-        {isLoading ? (
-          <div className="text-center py-20">
-            <div className="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
             <p className="text-muted-foreground">Loading collections...</p>
           </div>
-        ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-20 bg-gradient-to-br from-card to-card/80 rounded-3xl border-2 border-border shadow-[var(--shadow-medium)]">
-            <ShoppingBag className="h-24 w-24 text-muted-foreground/50 mx-auto mb-6" />
-            <h2 className="text-3xl font-semibold text-foreground mb-3">
-              {selectedCategory === "all" ? "No Products Found" : "No Products in This Collection"}
-            </h2>
-            <p className="text-muted-foreground max-w-md mx-auto mb-6">
-              {selectedCategory === "all" 
-                ? "Our store is being set up. Please check back soon for our amazing products!" 
-                : "This collection is currently empty. Try selecting a different category."}
-            </p>
-            {selectedCategory !== "all" && (
-              <Button onClick={() => setSelectedCategory("all")} className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary">
-                View All Products
-              </Button>
-            )}
-          </div>
-        ) : (
-          <>
-            <div className="mb-6 text-center">
-              <p className="text-sm text-muted-foreground">
-                Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
-                {selectedCategory !== "all" && ` in ${selectedCategory}`}
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-background">
+        {/* Hero Section */}
+        <section className="py-20 bg-gradient-to-br from-background via-secondary/20 to-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-gold bg-clip-text text-transparent">
+                Our Collections
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Explore our curated collections of premium products, from authentic Egyptian heritage pieces to modern smart home solutions
               </p>
+
+              {/* Search Bar */}
+              <div className="relative max-w-md mx-auto mb-6">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search collections..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 pr-4 py-6 text-lg"
+                />
+              </div>
+
+              {/* View Mode Toggle */}
+              <div className="flex items-center justify-center gap-2">
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('grid')}
+                >
+                  <Grid className="h-4 w-4 mr-2" />
+                  Grid
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('list')}
+                >
+                  <List className="h-4 w-4 mr-2" />
+                  List
+                </Button>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.node.id} product={product} />
+          </div>
+        </section>
+
+        {/* Featured Collections Section */}
+        {featuredCollections.length > 0 && (
+          <section className="py-12 container mx-auto px-4">
+            <div className="flex items-center gap-2 mb-8">
+              <Sparkles className="h-6 w-6 text-gold" />
+              <h2 className="text-3xl font-bold text-foreground">Featured Collections</h2>
+            </div>
+            
+            <div className={`grid gap-6 ${
+              viewMode === 'grid' 
+                ? 'grid-cols-1 md:grid-cols-2' 
+                : 'grid-cols-1'
+            }`}>
+              {featuredCollections.map((collection) => (
+                <Link 
+                  key={collection.id} 
+                  to={`/collections/${collection.handle}`}
+                  className="group"
+                >
+                  <Card className="hover:shadow-2xl transition-all duration-300 border-2 hover:border-gold overflow-hidden h-full">
+                    {collection.image && (
+                      <div className="relative h-64 overflow-hidden">
+                        <img 
+                          src={collection.image.url} 
+                          alt={collection.image.altText || collection.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {collection.handle === 'free-gifts' && (
+                          <div className="absolute top-4 right-4">
+                            <Badge className="bg-gold text-gold-foreground flex items-center gap-1">
+                              <Gift className="h-3 w-3" />
+                              Free Gift
+                            </Badge>
+                          </div>
+                        )}
+                        {collection.handle === 'egyptian-heritage' && (
+                          <div className="absolute top-4 right-4">
+                            <Badge className="bg-gradient-to-r from-gold to-accent text-white">
+                              Premium
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <CardHeader>
+                      <CardTitle className="text-2xl group-hover:text-gold transition-colors">
+                        {collection.title}
+                      </CardTitle>
+                      {collection.description && (
+                        <CardDescription className="text-base line-clamp-2">
+                          {collection.description}
+                        </CardDescription>
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      <Button 
+                        variant="outline" 
+                        className="w-full group-hover:bg-gold group-hover:text-gold-foreground group-hover:border-gold transition-colors"
+                      >
+                        Explore Collection
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
-          </>
+          </section>
         )}
-      </main>
 
+        {/* Regular Collections Section */}
+        {regularCollections.length > 0 && (
+          <section className="py-12 container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-foreground">
+              {featuredCollections.length > 0 ? 'More Collections' : 'All Collections'}
+            </h2>
+            
+            <div className={`grid gap-6 ${
+              viewMode === 'grid' 
+                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' 
+                : 'grid-cols-1'
+            }`}>
+              {regularCollections.map((collection) => (
+                <Link 
+                  key={collection.id} 
+                  to={`/collections/${collection.handle}`}
+                  className="group"
+                >
+                  <Card className="hover:shadow-lg transition-shadow h-full">
+                    {collection.image && (
+                      <div className="relative h-48 overflow-hidden">
+                        <img 
+                          src={collection.image.url} 
+                          alt={collection.image.altText || collection.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <CardHeader>
+                      <CardTitle className="group-hover:text-primary transition-colors">
+                        {collection.title}
+                      </CardTitle>
+                      {collection.description && (
+                        <CardDescription className="line-clamp-3">
+                          {collection.description}
+                        </CardDescription>
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full group-hover:bg-secondary transition-colors"
+                      >
+                        View Products
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* No Results */}
+        {filteredCollections.length === 0 && (
+          <section className="py-20 container mx-auto px-4">
+            <div className="text-center max-w-md mx-auto">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-2xl font-bold mb-2">No collections found</h3>
+              <p className="text-muted-foreground mb-6">
+                Try adjusting your search or browse all products
+              </p>
+              <Button asChild>
+                <Link to="/shop">Browse All Products</Link>
+              </Button>
+            </div>
+          </section>
+        )}
+
+        {/* Collection Stats */}
+        {collections.length > 0 && (
+          <section className="py-12 bg-secondary/20">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <p className="text-4xl font-bold text-primary mb-2">
+                    {collections.length}
+                  </p>
+                  <p className="text-muted-foreground">Total Collections</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-bold text-gold mb-2">
+                    {featuredCollections.length}
+                  </p>
+                  <p className="text-muted-foreground">Featured Collections</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-bold text-accent mb-2">
+                    {filteredCollections.length}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {searchQuery ? 'Search Results' : 'Available Now'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
       <Footer />
-    </div>
+    </>
   );
-};
-
-export default Collections;
+}

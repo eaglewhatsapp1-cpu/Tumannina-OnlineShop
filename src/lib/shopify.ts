@@ -51,6 +51,32 @@ export interface ShopifyProduct {
   };
 }
 
+export interface ShopifyCollection {
+  id: string;
+  title: string;
+  description: string;
+  descriptionHtml?: string;
+  handle: string;
+  image?: {
+    url: string;
+    altText: string | null;
+  };
+  products?: {
+    edges: ShopifyProduct[];
+  };
+}
+
+export interface ShopifyMenuItem {
+  title: string;
+  url: string;
+  type: string;
+  items?: ShopifyMenuItem[];
+}
+
+export interface ShopifyMenu {
+  items: ShopifyMenuItem[];
+}
+
 // GraphQL Query for Products
 const STOREFRONT_QUERY = `
   query GetProducts($first: Int!) {
@@ -202,6 +228,32 @@ export async function fetchLatestProducts(first: number = 8): Promise<ShopifyPro
   return data.data.products.edges;
 }
 
+// Fetch All Collections
+const COLLECTIONS_QUERY = `
+  query GetCollections($first: Int!) {
+    collections(first: $first) {
+      edges {
+        node {
+          id
+          title
+          description
+          descriptionHtml
+          handle
+          image {
+            url
+            altText
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchCollections(first: number = 50): Promise<ShopifyCollection[]> {
+  const data = await storefrontApiRequest(COLLECTIONS_QUERY, { first });
+  return data.data.collections.edges.map((edge: any) => edge.node);
+}
+
 // Fetch Collection by Handle
 const COLLECTION_QUERY = `
   query GetCollection($handle: String!, $first: Int!) {
@@ -209,6 +261,12 @@ const COLLECTION_QUERY = `
       id
       title
       description
+      descriptionHtml
+      handle
+      image {
+        url
+        altText
+      }
       products(first: $first) {
         edges {
           node {
@@ -258,18 +316,43 @@ const COLLECTION_QUERY = `
   }
 `;
 
-export interface ShopifyCollection {
-  id: string;
-  title: string;
-  description: string;
-  products: {
-    edges: ShopifyProduct[];
+export async function fetchCollectionByHandle(handle: string, first: number = 50): Promise<{
+  collection: ShopifyCollection;
+  products: ShopifyProduct[];
+} | null> {
+  const data = await storefrontApiRequest(COLLECTION_QUERY, { handle, first });
+  
+  if (!data.data.collectionByHandle) {
+    return null;
+  }
+  
+  return {
+    collection: data.data.collectionByHandle,
+    products: data.data.collectionByHandle.products.edges,
   };
 }
 
-export async function fetchCollectionByHandle(handle: string, first: number = 20): Promise<ShopifyCollection | null> {
-  const data = await storefrontApiRequest(COLLECTION_QUERY, { handle, first });
-  return data.data.collectionByHandle;
+// Fetch Menu by Handle
+const MENU_QUERY = `
+  query GetMenu($handle: String!) {
+    menu(handle: $handle) {
+      items {
+        title
+        url
+        type
+        items {
+          title
+          url
+          type
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchMenu(handle: string): Promise<ShopifyMenu | null> {
+  const data = await storefrontApiRequest(MENU_QUERY, { handle });
+  return data.data.menu;
 }
 
 // Cart Create Mutation
