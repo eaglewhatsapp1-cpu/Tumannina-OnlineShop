@@ -1,4 +1,4 @@
-# 🛍️ Tumāninah Veritas – Independent Shopify Test Build
+# 🛍️ Tumāninah Veritas – Independent Shopify Build
 
 Welcome to the **independent test build** of **Tumāninah Veritas Store**, a refined version cloned from the Lovable base project and optimized for direct **Shopify integration** and theme testing.
 
